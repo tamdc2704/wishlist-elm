@@ -5025,7 +5025,7 @@ var author$project$Main$viewSocialShare = A2(
 			elm$html$Html$div,
 			_List_fromArray(
 				[
-					elm$html$Html$Attributes$class('lfloat sizeof2')
+					elm$html$Html$Attributes$class('lfloat size1of2')
 				]),
 			_List_fromArray(
 				[
@@ -5059,7 +5059,7 @@ var author$project$Main$viewSocialShare = A2(
 									elm$html$Html$a,
 									_List_fromArray(
 										[
-											elm$html$Html$Attributes$class('social-buttons_button share js-i-wishlistShare'),
+											elm$html$Html$Attributes$class('social-buttons_button share'),
 											elm$html$Html$Attributes$name('Facebook'),
 											elm$html$Html$Attributes$target('_blank'),
 											elm$html$Html$Attributes$rel('noopener'),
@@ -5071,12 +5071,9 @@ var author$project$Main$viewSocialShare = A2(
 											elm$html$Html$i,
 											_List_fromArray(
 												[
-													elm$html$Html$Attributes$class('icon_facebook')
+													elm$html$Html$Attributes$class('icon-facebook')
 												]),
-											_List_fromArray(
-												[
-													elm$html$Html$text('F')
-												]))
+											_List_Nil)
 										]))
 								])),
 							A2(
@@ -5091,7 +5088,7 @@ var author$project$Main$viewSocialShare = A2(
 									elm$html$Html$a,
 									_List_fromArray(
 										[
-											elm$html$Html$Attributes$class('social-buttons_button share js-i-wishlistShare'),
+											elm$html$Html$Attributes$class('social-buttons_button share'),
 											elm$html$Html$Attributes$name('Twitter'),
 											elm$html$Html$Attributes$target('_blank'),
 											elm$html$Html$Attributes$rel('noopener'),
@@ -5103,12 +5100,9 @@ var author$project$Main$viewSocialShare = A2(
 											elm$html$Html$i,
 											_List_fromArray(
 												[
-													elm$html$Html$Attributes$class('icon_twitter')
+													elm$html$Html$Attributes$class('icon-twitter')
 												]),
-											_List_fromArray(
-												[
-													elm$html$Html$text('T')
-												]))
+											_List_Nil)
 										]))
 								])),
 							A2(
@@ -5123,7 +5117,7 @@ var author$project$Main$viewSocialShare = A2(
 									elm$html$Html$a,
 									_List_fromArray(
 										[
-											elm$html$Html$Attributes$class('social-buttons_button share js-i-wishlistShare'),
+											elm$html$Html$Attributes$class('social-buttons_button share'),
 											elm$html$Html$Attributes$name('Google +'),
 											elm$html$Html$Attributes$target('_blank'),
 											elm$html$Html$Attributes$rel('noopener'),
@@ -5135,16 +5129,20 @@ var author$project$Main$viewSocialShare = A2(
 											elm$html$Html$i,
 											_List_fromArray(
 												[
-													elm$html$Html$Attributes$class('icon_googleplus')
+													elm$html$Html$Attributes$class('icon-google-plus')
 												]),
-											_List_fromArray(
-												[
-													elm$html$Html$text('G')
-												]))
+											_List_Nil)
 										]))
 								]))
 						]))
-				]))
+				])),
+			A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('clear')
+				]),
+			_List_Nil)
 		]));
 var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$col = _VirtualDom_node('col');
@@ -5246,7 +5244,7 @@ var author$project$Main$viewWishListTable = A2(
 					elm$html$Html$tbody,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('wishlist-item')
+							elm$html$Html$Attributes$class('wishlist-items')
 						]),
 					_List_fromArray(
 						[
@@ -5303,7 +5301,8 @@ var author$project$Main$viewWishListTable = A2(
 													elm$html$Html$a,
 													_List_fromArray(
 														[
-															elm$html$Html$Attributes$href('#')
+															elm$html$Html$Attributes$href('#'),
+															elm$html$Html$Attributes$class('strong')
 														]),
 													_List_fromArray(
 														[
@@ -5752,7 +5751,7 @@ var author$project$Main$viewWishList = function (model) {
 						elm$html$Html$div,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('l-realative clearfix b-wishlist__listItm')
+								elm$html$Html$Attributes$class('l-relative clearfix b-wishlist__listItm')
 							]),
 						_List_fromArray(
 							[

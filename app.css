@@ -13,12 +13,21 @@ h5 {
     font-weight: 700;
     font-size: 12px;
 }
+
+h6 {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
 #content,
 .box:before,
-.box:after,
-.clearfix {
+.box:after {
     content: "";
     display: table;
+    clear: both;
+}
+
+.clear {
     clear: both;
 }
 
@@ -114,7 +123,7 @@ a {
     padding-right: 20px;
 }
 
-.l-realative {
+.l-relative {
     position: relative;
 }
 
@@ -124,4 +133,91 @@ a {
 
 .mtm {
     margin-top: 12px;
+}
+
+.mbl {
+    margin-bottom: 20px;
+}
+
+.mrm {
+    margin-right: 12px;
+}
+
+.mts {
+    margin-top: 5px;
+}
+
+.mll {
+    margin-left: 20px;
+}
+
+.mtl {
+    margin-top: 20px;
+}
+
+.ptl {
+    padding-top: 20px;
+}
+
+.pbl {
+    padding-bottom: 20px;
+}
+
+.size1of2 {
+    width: 50%;
+}
+
+.social-buttons h6 {
+    margin: 0 10px 0 0;
+    font-weight: 400;
+    display: inline-block;
+}
+
+.ui-gridFull {
+    display: table;
+    width: 100%;
+}
+.ui-grid {
+    border: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.wishlist-table .wishlist-items {
+    border-bottom: thin solid #dfdfdf;
+    border-top: thin solid #dfdfdf;
+}
+
+.strong {
+    font-weight: 700;
+}
+
+.wishlist-table .itm-time {
+    font-size: 11px;
+    margin-top: 12px;
+}
+
+.wishlist-table .itm-time {
+    color: #6d6e6e;
+}
+
+table td, table th {
+    border-bottom: 1px solid #dfdfdf;
+    padding-left: 0;
+}
+table td {
+    vertical-align: top;
+}
+table td, table th {
+    padding: 5px;
+}
+
+p {
+    margin: 0 0 12px;
+}
+
+.wishlist-table .addToCart, .wishlist-table .emptyColumn {
+    position: relative;
+    text-align: right;
+    width: 12%;
 }

@@ -61,7 +61,7 @@ viewWishList model =
             [ div [ class "b-account__title lfloat" ] [ text "My Wishlist" ] ]
         , div 
             [ class "b-wishlist__list pll prl" ]
-            [ div [ class "l-realative clearfix b-wishlist__listItm" ]
+            [ div [ class "l-relative clearfix b-wishlist__listItm" ]
                 [ div 
                     [ class "b-wishlist__listHeader box mtm mbm" ]
                     [ viewSocialShare
@@ -111,41 +111,42 @@ viewSidebarItem lst =
 viewSocialShare =
     div 
         [ class "mbl" ]
-        [ div [ class "lfloat sizeof2" ]
+        [ div [ class "lfloat size1of2" ]
             [ div [ class "wishlistShare mrm mts social-buttons ui-inlineBlock" ]
                 [ h6 [ class "social-buttons_label" ] [ text "Share" ]
                 , span [ class "mll" ]
                     [ a
-                        [ class "social-buttons_button share js-i-wishlistShare"
+                        [ class "social-buttons_button share"
                         , name "Facebook"
                         , target "_blank"
                         , rel "noopener"
                         , href "#"
                         ]
-                        [ i [ class "icon_facebook" ] [ text "F" ] ]
+                        [ i [ class "icon-facebook" ] [] ]
                     ]
                 , span [ class "mll" ]
                     [ a
-                        [ class "social-buttons_button share js-i-wishlistShare"
+                        [ class "social-buttons_button share"
                         , name "Twitter"
                         , target "_blank"
                         , rel "noopener"
                         , href "#"
                         ]
-                        [ i [ class "icon_twitter" ] [ text "T" ] ]
+                        [ i [ class "icon-twitter" ] [] ]
                     ]
                 , span [ class "mll" ]
                     [ a
-                        [ class "social-buttons_button share js-i-wishlistShare"
+                        [ class "social-buttons_button share"
                         , name "Google +"
                         , target "_blank"
                         , rel "noopener"
                         , href "#"
                         ]
-                        [ i [ class "icon_googleplus" ] [ text "G" ] ]
+                        [ i [ class "icon-google-plus" ] [] ]
                     ]
                 ]
             ]
+        , div [class "clear"] []
         ]
 
 
@@ -160,7 +161,7 @@ viewWishListTable =
                 , col [ style "width" "15%" ] []
                 ]
             , tbody
-                [ class "wishlist-item" ]
+                [ class "wishlist-items" ]
                 [ tr
                     []
                     [ td
@@ -182,7 +183,7 @@ viewWishListTable =
                         ]
                     , td
                         [ class "ptl pbl" ]
-                        [ p [] [ a [ href "#" ] [ text "The Executive" ] ]
+                        [ p [] [ a [ href "#", class "strong" ] [ text "The Executive" ] ]
                         , p [] [ a [ class "itm-oos itm-time", href "#" ] [ text "Wrap Cullotes" ] ]
                         , div
                             [ class "price-box" ]
