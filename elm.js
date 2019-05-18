@@ -4405,6 +4405,105 @@ var author$project$Main$update = F2(
 				{books: model.books - 1});
 		}
 	});
+var author$project$Main$sidebarItems = _List_fromArray(
+	['Account Information', 'My Wallet', 'My Memberships', 'Orders & Tracking', 'Exchange & Return', 'Preferences', 'Wishlist', 'Rewards']);
+var elm$core$Basics$apR = F2(
+	function (x, f) {
+		return f(x);
+	});
+var elm$core$Basics$eq = _Utils_equal;
+var elm$core$Basics$gt = _Utils_gt;
+var elm$core$List$foldl = F3(
+	function (func, acc, list) {
+		foldl:
+		while (true) {
+			if (!list.b) {
+				return acc;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				var $temp$func = func,
+					$temp$acc = A2(func, x, acc),
+					$temp$list = xs;
+				func = $temp$func;
+				acc = $temp$acc;
+				list = $temp$list;
+				continue foldl;
+			}
+		}
+	});
+var elm$core$List$reverse = function (list) {
+	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
+};
+var elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
+					} else {
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							elm$core$List$foldl,
+							fn,
+							acc,
+							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
+					}
+				}
+			}
+		}
+	});
+var elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4440,28 +4539,6 @@ var elm$core$Array$SubTree = function (a) {
 	return {$: 'SubTree', a: a};
 };
 var elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
-var elm$core$List$foldl = F3(
-	function (func, acc, list) {
-		foldl:
-		while (true) {
-			if (!list.b) {
-				return acc;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				var $temp$func = func,
-					$temp$acc = A2(func, x, acc),
-					$temp$list = xs;
-				func = $temp$func;
-				acc = $temp$acc;
-				list = $temp$list;
-				continue foldl;
-			}
-		}
-	});
-var elm$core$List$reverse = function (list) {
-	return A3(elm$core$List$foldl, elm$core$List$cons, _List_Nil, list);
-};
 var elm$core$Array$compressNodes = F2(
 	function (nodes, acc) {
 		compressNodes:
@@ -4484,11 +4561,6 @@ var elm$core$Array$compressNodes = F2(
 			}
 		}
 	});
-var elm$core$Basics$apR = F2(
-	function (x, f) {
-		return f(x);
-	});
-var elm$core$Basics$eq = _Utils_equal;
 var elm$core$Tuple$first = function (_n0) {
 	var x = _n0.a;
 	return x;
@@ -4514,7 +4586,6 @@ var elm$core$Basics$apL = F2(
 		return f(x);
 	});
 var elm$core$Basics$floor = _Basics_floor;
-var elm$core$Basics$gt = _Utils_gt;
 var elm$core$Basics$max = F2(
 	function (x, y) {
 		return (_Utils_cmp(x, y) > 0) ? x : y;
@@ -4817,12 +4888,10 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	}
 };
 var elm$html$Html$a = _VirtualDom_node('a');
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$h6 = _VirtualDom_node('h6');
-var elm$html$Html$i = _VirtualDom_node('i');
-var elm$html$Html$span = _VirtualDom_node('span');
+var elm$html$Html$li = _VirtualDom_node('li');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var elm$html$Html$ul = _VirtualDom_node('ul');
 var elm$json$Json$Encode$string = _Json_wrap;
 var elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -4832,15 +4901,118 @@ var elm$html$Html$Attributes$stringProperty = F2(
 			elm$json$Json$Encode$string(string));
 	});
 var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
+var elm$core$List$filter = F2(
+	function (isGood, list) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, xs) {
+					return isGood(x) ? A2(elm$core$List$cons, x, xs) : xs;
+				}),
+			_List_Nil,
+			list);
+	});
+var elm$core$Tuple$second = function (_n0) {
+	var y = _n0.b;
+	return y;
+};
+var elm$html$Html$Attributes$classList = function (classes) {
+	return elm$html$Html$Attributes$class(
+		A2(
+			elm$core$String$join,
+			' ',
+			A2(
+				elm$core$List$map,
+				elm$core$Tuple$first,
+				A2(elm$core$List$filter, elm$core$Tuple$second, classes))));
+};
 var elm$html$Html$Attributes$href = function (url) {
 	return A2(
 		elm$html$Html$Attributes$stringProperty,
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
+var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
+var author$project$Main$viewSidebarItem = function (lst) {
+	return A2(
+		elm$html$Html$ul,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('b-accountMenu')
+			]),
+		A2(
+			elm$core$List$map,
+			function (item) {
+				return A2(
+					elm$html$Html$li,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$classList(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('selected', item === 'Wishlist')
+								]))
+						]),
+					_List_fromArray(
+						[
+							A2(
+							elm$html$Html$a,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$class('b-accountMenu-Itm sel-menu-myaccount'),
+									elm$html$Html$Attributes$href('#'),
+									elm$html$Html$Attributes$target('_blank')
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text(item)
+								]))
+						]));
+			},
+			lst));
+};
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$html$Html$h5 = _VirtualDom_node('h5');
+var author$project$Main$viewSidebar = A2(
+	elm$html$Html$div,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$class('l-sidebar box-bgcolor')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('customer_menu')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					elm$html$Html$div,
+					_List_Nil,
+					_List_fromArray(
+						[
+							A2(
+							elm$html$Html$h5,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$class('accMenuPad')
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text('My Account')
+								])),
+							author$project$Main$viewSidebarItem(author$project$Main$sidebarItems)
+						]))
+				]))
+		]));
+var elm$html$Html$h6 = _VirtualDom_node('h6');
+var elm$html$Html$i = _VirtualDom_node('i');
+var elm$html$Html$span = _VirtualDom_node('span');
 var elm$html$Html$Attributes$name = elm$html$Html$Attributes$stringProperty('name');
 var elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
-var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
 var author$project$Main$viewSocialShare = A2(
 	elm$html$Html$div,
 	_List_fromArray(
@@ -4853,7 +5025,7 @@ var author$project$Main$viewSocialShare = A2(
 			elm$html$Html$div,
 			_List_fromArray(
 				[
-					elm$html$Html$Attributes$class('js-wl-top-bar lfloat sizeof2')
+					elm$html$Html$Attributes$class('lfloat sizeof2')
 				]),
 			_List_fromArray(
 				[
@@ -4901,7 +5073,10 @@ var author$project$Main$viewSocialShare = A2(
 												[
 													elm$html$Html$Attributes$class('icon_facebook')
 												]),
-											_List_Nil)
+											_List_fromArray(
+												[
+													elm$html$Html$text('F')
+												]))
 										]))
 								])),
 							A2(
@@ -4930,7 +5105,10 @@ var author$project$Main$viewSocialShare = A2(
 												[
 													elm$html$Html$Attributes$class('icon_twitter')
 												]),
-											_List_Nil)
+											_List_fromArray(
+												[
+													elm$html$Html$text('T')
+												]))
 										]))
 								])),
 							A2(
@@ -4959,27 +5137,44 @@ var author$project$Main$viewSocialShare = A2(
 												[
 													elm$html$Html$Attributes$class('icon_googleplus')
 												]),
-											_List_Nil)
+											_List_fromArray(
+												[
+													elm$html$Html$text('G')
+												]))
 										]))
 								]))
 						]))
 				]))
 		]));
+var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$col = _VirtualDom_node('col');
 var elm$html$Html$colgroup = _VirtualDom_node('colgroup');
+var elm$html$Html$h3 = _VirtualDom_node('h3');
 var elm$html$Html$img = _VirtualDom_node('img');
+var elm$html$Html$option = _VirtualDom_node('option');
 var elm$html$Html$p = _VirtualDom_node('p');
+var elm$html$Html$select = _VirtualDom_node('select');
 var elm$html$Html$table = _VirtualDom_node('table');
 var elm$html$Html$tbody = _VirtualDom_node('tbody');
 var elm$html$Html$td = _VirtualDom_node('td');
 var elm$html$Html$tr = _VirtualDom_node('tr');
 var elm$html$Html$Attributes$alt = elm$html$Html$Attributes$stringProperty('alt');
+var elm$json$Json$Encode$bool = _Json_wrap;
+var elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$bool(bool));
+	});
+var elm$html$Html$Attributes$disabled = elm$html$Html$Attributes$boolProperty('disabled');
 var elm$html$Html$Attributes$height = function (n) {
 	return A2(
 		_VirtualDom_attribute,
 		'height',
 		elm$core$String$fromInt(n));
 };
+var elm$html$Html$Attributes$selected = elm$html$Html$Attributes$boolProperty('selected');
 var elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		elm$html$Html$Attributes$stringProperty,
@@ -4989,6 +5184,8 @@ var elm$html$Html$Attributes$src = function (url) {
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var elm$html$Html$Attributes$title = elm$html$Html$Attributes$stringProperty('title');
+var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
+var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
 var elm$html$Html$Attributes$width = function (n) {
 	return A2(
 		_VirtualDom_attribute,
@@ -5080,7 +5277,7 @@ var author$project$Main$viewWishListTable = A2(
 													elm$html$Html$img,
 													_List_fromArray(
 														[
-															elm$html$Html$Attributes$src('https://thumbor.dev.zalora.io/6ic0jn5-QetEof7zjhgKkxyohe0=/fit-in/75x108/filters:quality(95):fill(ffffff)/https://zstaticmy02-a.akamaihd.net/p/the-executive-3750-0880161-1.jpg'),
+															elm$html$Html$Attributes$src('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS60AkJ5uIuXe9mmJCo_L4O-gW47OU-u3NU4eVc1AB2VQS3ERfn'),
 															elm$html$Html$Attributes$title('Wrap Cullotes from The Executive in red_1'),
 															elm$html$Html$Attributes$alt('Wrap Cullotes from The Executive in red_1'),
 															elm$html$Html$Attributes$width(75),
@@ -5154,17 +5351,17 @@ var author$project$Main$viewWishListTable = A2(
 																	elm$html$Html$text('RM 99.00')
 																]))
 														]))
+												])),
+											A2(
+											elm$html$Html$div,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('itm-time')
+												]),
+											_List_fromArray(
+												[
+													elm$html$Html$text('Added on: 2019-05-17')
 												]))
-										])),
-									A2(
-									elm$html$Html$div,
-									_List_fromArray(
-										[
-											elm$html$Html$Attributes$class('itm-time')
-										]),
-									_List_fromArray(
-										[
-											elm$html$Html$text('Added on: 2019-05-17')
 										])),
 									A2(
 									elm$html$Html$td,
@@ -5172,7 +5369,114 @@ var author$project$Main$viewWishListTable = A2(
 										[
 											elm$html$Html$Attributes$class('ptl pbl')
 										]),
-									_List_Nil),
+									_List_fromArray(
+										[
+											A2(
+											elm$html$Html$div,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('prdSizeOption box size pbl')
+												]),
+											_List_fromArray(
+												[
+													A2(
+													elm$html$Html$select,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('js-wlSizeSystem')
+														]),
+													_List_fromArray(
+														[
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$value('International')
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('International')
+																])),
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$value('Waist Size')
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('Waist Size')
+																]))
+														])),
+													A2(
+													elm$html$Html$div,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('pbs')
+														]),
+													_List_Nil),
+													A2(
+													elm$html$Html$select,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('js-wlSize')
+														]),
+													_List_fromArray(
+														[
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$disabled(true)
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('Choose size')
+																])),
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$value('S')
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('S')
+																])),
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$value('M')
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('M')
+																])),
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$value('L'),
+																	elm$html$Html$Attributes$selected(true)
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('L')
+																])),
+															A2(
+															elm$html$Html$option,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$value('XL')
+																]),
+															_List_fromArray(
+																[
+																	elm$html$Html$text('XL')
+																]))
+														]))
+												]))
+										])),
 									A2(
 									elm$html$Html$td,
 									_List_fromArray(
@@ -5186,12 +5490,229 @@ var author$project$Main$viewWishListTable = A2(
 										[
 											elm$html$Html$Attributes$class('addToCart ptl pbl')
 										]),
-									_List_Nil)
+									_List_fromArray(
+										[
+											A2(
+											elm$html$Html$a,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('btn btn--fluid'),
+													elm$html$Html$Attributes$title('Add to Bag')
+												]),
+											_List_fromArray(
+												[
+													elm$html$Html$text('Add to Bag')
+												])),
+											A2(
+											elm$html$Html$div,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('icon i-loader'),
+													A2(elm$html$Html$Attributes$style, 'display', 'none')
+												]),
+											_List_Nil),
+											A2(
+											elm$html$Html$div,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('mtl wishListMenuWrapper b-wishlist__listOption')
+												]),
+											_List_fromArray(
+												[
+													A2(
+													elm$html$Html$a,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('toggleWishListMenu close open'),
+															elm$html$Html$Attributes$title('Share'),
+															elm$html$Html$Attributes$href('#'),
+															A2(elm$html$Html$Attributes$style, 'display', 'inline')
+														]),
+													_List_fromArray(
+														[
+															elm$html$Html$text('Share')
+														])),
+													A2(
+													elm$html$Html$div,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('wishlistShare wishListMenu wishShare-popover wishlist-share-product display-none'),
+															A2(elm$html$Html$Attributes$style, 'display', 'none')
+														]),
+													_List_fromArray(
+														[
+															A2(
+															elm$html$Html$div,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$class('wishlist-share-padding wishlist-share-noborder')
+																]),
+															_List_fromArray(
+																[
+																	A2(
+																	elm$html$Html$h3,
+																	_List_fromArray(
+																		[
+																			elm$html$Html$Attributes$class('wishlist-share-list lfloat')
+																		]),
+																	_List_fromArray(
+																		[
+																			elm$html$Html$text('Share on')
+																		])),
+																	A2(
+																	elm$html$Html$a,
+																	_List_fromArray(
+																		[
+																			elm$html$Html$Attributes$class('wishlist-share-close rfloat'),
+																			elm$html$Html$Attributes$href('javascript:void(0)')
+																		]),
+																	_List_fromArray(
+																		[
+																			A2(
+																			elm$html$Html$i,
+																			_List_fromArray(
+																				[
+																					elm$html$Html$Attributes$class('wl-scale40 icon_close-medium-dark')
+																				]),
+																			_List_Nil)
+																		])),
+																	A2(
+																	elm$html$Html$div,
+																	_List_fromArray(
+																		[
+																			elm$html$Html$Attributes$class('clear')
+																		]),
+																	_List_Nil)
+																])),
+															A2(
+															elm$html$Html$div,
+															_List_fromArray(
+																[
+																	elm$html$Html$Attributes$class('wishlist-share-padding')
+																]),
+															_List_fromArray(
+																[
+																	A2(
+																	elm$html$Html$div,
+																	_List_fromArray(
+																		[
+																			A2(elm$html$Html$Attributes$style, 'padding-left', '14px')
+																		]),
+																	_List_fromArray(
+																		[
+																			A2(
+																			elm$html$Html$a,
+																			_List_fromArray(
+																				[
+																					elm$html$Html$Attributes$class('i-facebook lfloat share'),
+																					elm$html$Html$Attributes$name('Facebook'),
+																					elm$html$Html$Attributes$target('_blank'),
+																					elm$html$Html$Attributes$rel('noopener'),
+																					elm$html$Html$Attributes$href('#')
+																				]),
+																			_List_Nil),
+																			A2(
+																			elm$html$Html$a,
+																			_List_fromArray(
+																				[
+																					elm$html$Html$Attributes$class('i-twitter lfloat share'),
+																					elm$html$Html$Attributes$name('Twitter'),
+																					elm$html$Html$Attributes$target('_blank'),
+																					elm$html$Html$Attributes$rel('noopener'),
+																					elm$html$Html$Attributes$href('#')
+																				]),
+																			_List_Nil),
+																			A2(
+																			elm$html$Html$a,
+																			_List_fromArray(
+																				[
+																					elm$html$Html$Attributes$class('i-googleplus lfloat share'),
+																					elm$html$Html$Attributes$name('Google +'),
+																					elm$html$Html$Attributes$target('_blank'),
+																					elm$html$Html$Attributes$rel('noopener'),
+																					elm$html$Html$Attributes$href('#')
+																				]),
+																			_List_Nil),
+																			A2(
+																			elm$html$Html$div,
+																			_List_fromArray(
+																				[
+																					elm$html$Html$Attributes$class('clear')
+																				]),
+																			_List_Nil)
+																		]))
+																]))
+														]))
+												])),
+											A2(
+											elm$html$Html$div,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('paml box wl-item__delete-popover display-none'),
+													A2(elm$html$Html$Attributes$style, 'display', 'none')
+												]),
+											_List_fromArray(
+												[
+													A2(
+													elm$html$Html$div,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('itm__delete-title clear pbl')
+														]),
+													_List_fromArray(
+														[
+															elm$html$Html$text('Remove item?')
+														])),
+													A2(
+													elm$html$Html$button,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('btn btn--fluid mbs'),
+															elm$html$Html$Attributes$type_('button'),
+															elm$html$Html$Attributes$title('No')
+														]),
+													_List_fromArray(
+														[
+															elm$html$Html$text('No')
+														])),
+													A2(
+													elm$html$Html$button,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class(' btn btn--secondary btn--fluid'),
+															elm$html$Html$Attributes$type_('button'),
+															elm$html$Html$Attributes$title('Yes')
+														]),
+													_List_fromArray(
+														[
+															elm$html$Html$text('Yes')
+														]))
+												])),
+											A2(
+											elm$html$Html$div,
+											_List_fromArray(
+												[
+													elm$html$Html$Attributes$class('removeWishlistItem')
+												]),
+											_List_fromArray(
+												[
+													A2(
+													elm$html$Html$i,
+													_List_fromArray(
+														[
+															elm$html$Html$Attributes$class('wl-scale40 icon_close-medium-dark')
+														]),
+													_List_fromArray(
+														[
+															elm$html$Html$text('X')
+														]))
+												]))
+										]))
 								]))
 						]))
 				]))
 		]));
-var author$project$Main$view = function (model) {
+var author$project$Main$viewWishList = function (model) {
 	return A2(
 		elm$html$Html$div,
 		_List_fromArray(
@@ -5239,11 +5760,34 @@ var author$project$Main$view = function (model) {
 								elm$html$Html$div,
 								_List_fromArray(
 									[
-										elm$html$Html$Attributes$class('b-wishlist__listHeader box mtm nbm')
+										elm$html$Html$Attributes$class('b-wishlist__listHeader box mtm mbm')
 									]),
 								_List_fromArray(
 									[author$project$Main$viewSocialShare, author$project$Main$viewWishListTable]))
 							]))
+					]))
+			]));
+};
+var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
+var author$project$Main$view = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$id('content')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('l-hasSidebar')
+					]),
+				_List_fromArray(
+					[
+						author$project$Main$viewSidebar,
+						author$project$Main$viewWishList(model)
 					]))
 			]));
 };
@@ -5274,75 +5818,6 @@ var elm$core$Task$Perform = function (a) {
 };
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
-var elm$core$List$foldrHelper = F4(
-	function (fn, acc, ctr, ls) {
-		if (!ls.b) {
-			return acc;
-		} else {
-			var a = ls.a;
-			var r1 = ls.b;
-			if (!r1.b) {
-				return A2(fn, a, acc);
-			} else {
-				var b = r1.a;
-				var r2 = r1.b;
-				if (!r2.b) {
-					return A2(
-						fn,
-						a,
-						A2(fn, b, acc));
-				} else {
-					var c = r2.a;
-					var r3 = r2.b;
-					if (!r3.b) {
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(fn, c, acc)));
-					} else {
-						var d = r3.a;
-						var r4 = r3.b;
-						var res = (ctr > 500) ? A3(
-							elm$core$List$foldl,
-							fn,
-							acc,
-							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(
-									fn,
-									c,
-									A2(fn, d, res))));
-					}
-				}
-			}
-		}
-	});
-var elm$core$List$foldr = F3(
-	function (fn, acc, ls) {
-		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
-	});
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
 var elm$core$Task$andThen = _Scheduler_andThen;
 var elm$core$Task$map = F2(
 	function (func, taskA) {
